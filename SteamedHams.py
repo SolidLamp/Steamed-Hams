@@ -205,7 +205,7 @@ def action14():
     if query == "1":
         action17()
     elif query == "2":
-        action
+        action21()
     else:
         action14()
 
@@ -230,7 +230,7 @@ def action16():
     if query == "1":
         action17()
     elif query == "2":
-        action
+        action21()
     else:
         action14()
 
