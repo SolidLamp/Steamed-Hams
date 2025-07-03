@@ -18,8 +18,9 @@ def option(a):
 
 
 def ending(a):
-    for i in 3:
-        print()
+    print()
+    print()
+    print()
     time.sleep(0.25)
     print("You achieved the:")
     time.sleep(0.25)
@@ -29,8 +30,9 @@ def ending(a):
     print()
     print("Ending.")
     time.sleep(0.5)
-    for i in 3:
-        print()
+    print()
+    print()
+    print()
     print("Try again?")
 
 # The Game
