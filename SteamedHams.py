@@ -68,15 +68,19 @@ def gameLoop():
 
 def action1():
     print2("Chalmers: Well, Seymour, I made it, despite your directions.")
-    query = option(["Aggressive and rude insult","Overly friendly greeting","Slam the door in his face","Beatbox"])
+    query = option(["Aggressive and rude insult","Overly friendly greeting","Shut the door","Beatbox","[Say nothing]"])
     if query == "1":
         action2()
     elif query == "2":
+        print2("Skinner: Ah, Superintendent Chalmers, welcome! I hope you're prepared for an unforgettable luncheon!")
         action3()
     elif query == "3":
         ending("I haven't coded this yet")
     elif query == "4":
         ending("I haven't coded this yet")
+    elif query == "5":
+        time.sleep(0.5)
+        action3()
     else:
         action1()
     
@@ -87,15 +91,18 @@ def action2():
     ending("Fired")
 
 def action3():
-    print2("Skinner: Ah, Superintendent Chalmers, welcome! I hope you're prepared for an unforgettable luncheon!")
     print2("Chalmers: Yeah.")
     print2("[Skinner enters the kitchen, soon realising that his roast is ruined.]")
     print2("Skinner: Oh, egads! My roast is ruined!")
-    query=option(["Tell the truth","Lie and purchase fast food"])
+    query=option(["Tell the truth","Lie and purchase fast food","Serve ruined roast","Serve the roast anyway, and ignore the fact that it is ruined"])
     if query == "1":
         action4()
     elif query == "2":
         action5()
+    elif query == "3":
+        ending("I haven't coded this yet")
+    elif query == "4":
+        ending("I haven't coded this yet")
     else:
         action3()
 
@@ -114,15 +121,17 @@ def action5():
         print2("Skinner: But what if I were to purchase fast food and disguise it as my own cooking? [chuckles] Delightfully devilish, Seymour.")
         print2("[Chalmers enters the kitchen, viewing Skinner attempting to escape out of the window]")
         print2("Chalmers: SEEEEEYMOOUUURRR!!!")
-        query=option(["Tell the truth","Opening a window","Stretching your calves on the windowsill","Skydiving"])
+        query=option(["Tell the truth","Opening a window","Stretching your calves on the windowsill","Skydiving out of the window","Tell the truth, but play it off as a joke"])
         if query == "1":
             action6()
         elif query == "2":
             action7()
         elif query == "3":
             action9()
-        elif query  == "4":
+        elif query == "4":
             action8()
+        elif query == "5":
+            ending("I haven't coded this yet")
         else:
             action5()
 
@@ -190,18 +199,22 @@ def action13():
     print2("Skinner: Yes. It's a regional dialect.")
     print2("Chalmers: Uh-huh. Eh, what region?")
     print2("Skinner: Uh...")
-    query=option(["Upstate New York","Russia"])
+    query=option(["Upstate New York","Russia","Albany","Utica"])
     if query == "1":
         action14()
     elif query == "2":
         action15()
+    elif query == "3":
+        ending("I haven't coded this yet")
+    elif query == "4":
+        ending("I haven't coded this yet")
     else:
         action13()
 
 def action14():
     print2("Skinner: Upstate New York.")
     print2("Chalmers: Really? Well I'm from Utica and I've never heard anyone use the phrase steamed hams.")
-    query=option(["Specify a different region","Escape the conversation"])
+    query=option(["Specify a more specific region","Escape the conversation"])
     if query == "1":
         action17()
     elif query == "2":
@@ -320,11 +333,11 @@ def action23():
 
 def action24():
     print2("Skinner: Aurora Borealis.")
-    print2("Chalmers: \033[1m A-Aurora Borealis!?")
+    print2("Chalmers: \033[1m A-Aurora Borealis?!")
     print2("Chalmers: At this time of year,")
     print2("Chalmers: At this time of day,")
     print2("Chalmers: In this part of the country,")
-    print2("Chalmers: Localised entirely within your kitchen!? \033[0m")
+    print2("Chalmers: Localised entirely within your kitchen?! \033[0m")
     query=option(["Yes","No"])
     if query == "1":
         action26()
@@ -369,3 +382,5 @@ def action28():
 
 intro()
 exit()
+
+#Achievements: Vetaran (get all original endings in Skinner's path), Newbie (get all Plus! endings in Skinner's path), Seymour Butts (get all of Skinner's endings), the Superintendent's Gonna Need His Medication (get all of Chalmer's endings), Steamed Hams (Get the Canon Ending), Champion (Get the most points possible.), 
