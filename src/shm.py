@@ -11,19 +11,20 @@ history = game.history
 
 if __name__ == "__main__":
 
-    if len(sys.argv) > 1:
-        sys.argv[1]
-    else:
-        print(
-            "SHM Engine 0.9b\n2025-09-28\nhttps://github.com/solidlamp\nThis release: The Shopkeeper's Quest Experimental 2025-09-28"
-        )
+    #if len(sys.argv) > 1:
+        #sys.argv[1]
+    print(
+        "SHM Engine 0.9b\n2025-10-02\nhttps://github.com/solidlamp\nThis release: 'Steamed Hams: The Game Plus! Edition Beta 2025-10-02'"
+    )
 
 roomID = 1
 
 def option(win, text, options, Inventory=True):
+    if not hasattr(game_state, 'inventory'):
+        Inventory=False
     query = 0
     choices = options
-    if Inventory:
+    if Inventory and hasattr(game_state, 'inventory'):
         choices = options + ["Inventory"]
     query = tui.option(win, text, choices)
     if query == "q":
@@ -43,7 +44,7 @@ def option(win, text, options, Inventory=True):
 def ending(win, end):
     if game.endingText and end in game.endingText:
         print3(win, "\n" + game.endingText[end].replace("|", end), 0, 0.01, 0.65)
-        time.sleep(1.5)
+    time.sleep(1.5)
     win.clear()
     print3(win, game.defaultEnding.replace("|", end), 0, 0.01, 0.65)
     time.sleep(3.5)
@@ -62,8 +63,9 @@ def lose(win, text):
 def gameLoop(win, starting_room=0):
     rooms = game.get_rooms(win)
     win.clear()
-    if game.gameInfo["complevel"] != 0:
-        print3(win, "ERROR: This game is not compatible with this version of the SHM Engine.", 1, 0)
+    if game.gameInfo["complevel"] != 1:
+        complevel = game.gameInfo["complevel"]
+        print3(win, f"ERROR: This game (complevel {complevel}) is not compatible with this version of the SHM Engine (1.0 / complevel 1).", 1, 0)
         print3(win, "\nPress any key to exit...", 0, 0)
         win.getch()
         sys.exit(1)
@@ -92,9 +94,9 @@ def gameLoop(win, starting_room=0):
         ):
             if "ItemText" in room:
                 print3(win, "\n" + room["ItemText"])
-            if game_state.inventory and game.keyItems and room["Item"] in game.keyItems:
+            if hasattr(game_state, 'inventory') and game.keyItems and room["Item"] in game.keyItems:
                 game_state.inventory.getKeyItem(room["Item"], win)
-            elif game_state.inventory:
+            elif hasattr(game_state, 'inventory'):
                 game_state.inventory.getItem(room["Item"], win)
             win.getch()
     if "Automove" in room:

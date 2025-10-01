@@ -50,7 +50,12 @@ def print3(win, text, colorcode=0, delay=0.01, pauseAtNewline=0.0):
           win.addstr("", curses.A_BOLD)
         i += 3
     else:
-      win.addstr(char, curses.color_pair(ansi))
+      if len(str(ansi)) == 2:
+        win.addstr(char, curses.color_pair(ansi))
+      elif ansi == 1:
+        win.addstr(char, curses.A_BOLD)
+      elif ansi == 0:
+        win.addstr(char, curses.A_NORMAL)
       win.refresh()
       time.sleep(delay)
     i += 1
