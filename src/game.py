@@ -83,7 +83,7 @@ def get_rooms(win):
             "Move": [5, 3],
         },
         3: {
-            "Text": "You did not open the door.\n\033[33m*Ding, dong!*\033[0m There goes the doorbell, again.\n\033[34mChalmers: 'Seymour!'\033[0m\nOpen it?",
+            "Text": "You did not open the door.\n\033[33m*Ding, dong!*\033[0m There goes the doorbell, again.\n\033[34mChalmers: '\033[1mSeymour!\033[0m\033[34m'\033[0m\nOpen it?",
             "Options": ["Yes", "No"],
             "Move": [5, 4],
         },
@@ -97,7 +97,7 @@ def get_rooms(win):
             "Move": [6, 10, 7, 8, 9],
         },
         6: {
-            "Text": "\033[36mSkinner: 'You fat-headed buffoon! The directions I gave you were perfectly in order! Plus you've already been here, so you must know the way!'\033[0m\n\033[34mChalmers: 'Seymour! I have never been more insulted in my life! You're fired!'\033[0m",
+            "Text": "\033[36mSkinner: 'You fat-headed buffoon! The directions I gave you were perfectly in order! Plus you've already been here, so you must know the way!'\033[0m\n\033[34mChalmers: '\033[1mSeymour! I have never been more insulted in my life! You're fired!\033[0m\033[34m'\033[0m",
             "Lose": "Fired",
         },
         9: {
@@ -129,7 +129,7 @@ def get_rooms(win):
             "Move": [15, 16, 18, 17, 19]
         },
         15: {
-            "Text": "\033[36mSkinner: 'Superintendent! The roast is on fire, I-'\n\033[34mChalmers: 'And you were climbing out of the window to escape?'\n\033[36mSkinner: 'No, I was just-'\n\033[34mChalmers: 'Good lord, Seymour! Aren't you a member of the Springfield Voluntary Fire Department? You haven't alerted me or your mother! We could have been seriously injured!'\n\033[36mSkinner: 'Well, now that you put it like that, I suppose-'\n\033[34mChalmers: That's it, Seymour! You're fired!'\033[0m",
+            "Text": "\033[36mSkinner: 'Superintendent! The roast is on fire, I-'\n\033[34mChalmers: 'And you were climbing out of the window to escape?'\n\033[36mSkinner: 'No, I was just-'\n\033[34mChalmers: 'Good lord, Seymour! Aren't you a member of the Springfield Voluntary Fire Department? You haven't alerted me or your mother! We could have been seriously injured!'\n\033[36mSkinner: 'Well, now that you put it like that, I suppose-'\n\033[34mChalmers: That's it, Seymour! \033[1mYou're fired!\033[0m\033[34m'\033[0m",
             "Lose": "Fired",
         },
         16: {
@@ -175,14 +175,102 @@ def get_rooms(win):
             "Automove": 25,
         },
         25: {
-            "Text": "",
-            "Script": lambda: print3(win, str("\033[36mSkinner: 'Superintendent, I hope you're ready for some mouthwatering hamburgers!'\n\033[34mChalmers: 'I thought we were having " + game_state.luncheon + ".'\033[0m")),
+            "Text": str("\033[36mSkinner: 'Superintendent, I hope you're ready for some mouthwatering hamburgers!'\n\033[34mChalmers: 'I thought we were having " + game_state.luncheon + ".'\033[0m"),
             "Options": ["Tell the truth","Make up an excuse"],
             "Move": [26,27],
         },
         26: {
             "Text": "\033[36mSkinner: 'To tell the truth, Superintendent, the roast caught fire, but I just wanted this to be perfect, so I purchased fast food.'\n\033[34mChalmers: 'Look, Seymour, we've worked together for over 30 years. You can tell me when something's wrong, but we have to save your mother and call the fire department. We can reschedule the meeting, how about it, Seymour?'\033[0m",
             "Ending": "Cancelled Luncheon",
+        },
+        27: {
+            "Text": "\033[36mSkinner: 'Oh, no, I said steamed hams. That's what I call hamburgers.'\n\033[34mChalmers: 'You call hamburgers steamed hams?'\n\033[36mSkinner: 'Yes. It's a regional dialect.'\n\033[34mChalmers: 'Uh-huh. Uh, what region?'\n\033[36mSkinner: 'Uh...'\033[0m",
+            "Options": ["Upstate New York","Russia","Albany","Utica"],
+            "Move": [28,29,130,140],
+        },
+        28: {
+            "Text": "\033[36mSkinner: 'Upstate New York.'\n\033[34mChalmers: 'Really? Well I'm from Utica and I've never heard anyone use the phrase steamed hams.'\033[0m",
+            "Options": ["Specify a more specific region","Escape the conversation"],
+            "Move": [31,35],
+        },
+        29: {
+            "Text": "\033[36mSkinner: 'Russia.'\n\033[34mChalmers: 'Look, Seymour, I know your family history - you're not from Russia.'\n\033[36mSkinner: 'Oh. Uh...'\033[0m",
+            "Options": ["Play it off as a joke","Double down"],
+            "Move": [30,131],
+        },
+        30: {
+            "Text": "\033[36mSkinner: 'Ho, ho, ho, no!'\n\033[36mSkinner: 'I was just 'pulling your thread', as they say.'\n\033[36mSkinner: 'I'm really from upstate New York.'\n\033[34mChalmers: 'Really? Well I'm from Utica and I've never heard anyone use the phrase steamed hams.'\033[0m",
+            "Options": ["Specify a different region","Escape the conversation"],
+            "Move": [31,35],
+        },
+        31: {
+            "Text": "\033[36mSkinner: 'Oh, not in Utica, no. It's an Albany expression.'\n\033[34mChalmers: 'I see.'\nChalmers: You know, these hamburgers are quite similar to the ones they have at Krusty Burger.'\033[0m",
+            "Options": ["Tell the truth","'Old Family Recipe'"],
+            "Move": [32,33],
+        },
+        32: {
+            "Text": "\033[36mSkinner: 'Well, that's because they are.'\n\033[34mChalmers: 'What?! You're telling me that you bought Krusty Burgers and served them to me as your own- \033[1mGOOD LORD!\033[0m\033[34m What is happening in there?!'\033[0m",
+            "Options": ["Fire","Roboticiser","Aurora Borealis"],
+            "Move": [36,37,38],
+        },
+        33: {
+            "Text": "\033[36mSkinner: 'Ho, ho, ho, no! Patented Skinner Burgers. Old family recipe!'\n\033[34mChalmers: 'For steamed hams?'\n\033[36mSkinner: 'Yes.'\n\033[34mChalmers: 'Yes, and you call them steamed hams, despite the fact they are obviously grilled.'\033[0m",
+            "Options": ["Respond with confidence","Escape the conversation"],
+            "Move": [34,35],
+        },
+        34: {
+            "Text": "\033[36mSkinner: 'Y- Uh.. Yes!'\n\033[34mChalmers: 'I see'.\nChalmers: 'Well, I should probably be g- \033[1m GOOD LORD! \033[0m\033[34m What is happening in there?!'\033[0m",
+            "Options": ["Fire","Roboticiser","Aurora Borealis"],
+            "Move": [36,37,38],
+        },
+        35: {
+            "Text": "\033[36mSkinner: 'Y- Uh.. you know, the... One thing I should... excuse me for one second.'\n\033[34mChalmers: 'Of course.'\033[0m*Skinner enters the kitchen for a couple seconds before leaving again, and returning.*\n\033[36mSkinner: *BIG YAWN* 'Well, that was wonderful. A good time was had by all. I'm pooped.\n\033[34mChalmers: 'Yes, I should be- \033[1m GOOD LORD! \033[0m What is happening in there?!'\033[0m",
+            "Options": ["Fire","Roboticiser","Aurora Borealis"],
+            "Move": [36,37,38],
+        },
+        36: {
+            "Text": "\033[36mSkinner: 'The kitchen in on fire!'\n\033[34mChalmers: '\033[1mGood lord!\033[34m We have to save your mother and call the fire department!'\n\033[0m*Through Skinner and Chalmer's swift actions, Agnes is saved and the fire department arrive to extinguish Skinner's house*\n\033[34mChalmers: 'Well, Seymour, that certainly was an unforgettable luncheon.'\033[0m",
+            "Ending": "Unforgettable Luncheon, but not in a good way",
+        },
+        37: {
+            "Text": "\033[36mSkinner: 'Uhh... Roboticiser.'\n\033[34mChalmers: 'Wha-'\n\033[0m*Robotnik steps out of the kitchen, causing Skinner to die of a heart attack*",
+            "Ending": "Saturday Morning",
+        },
+        38: {
+            "Text": "\033[36mSkinner: 'Aurora Borealis.'\n\033[34mChalmers: '\033[1mA-Aurora Borealis?!\033[0m\033[34m'\nChalmers: '\033[1mAt this time of year,\033[0m\033[34m'\nChalmers: '\033[1mAt this time of day,\033[0m\033[34m'\nChalmers: '\033[1mIn this part of the country,\033[0m\033[34m'\nChalmers: '\033[1mLocalised entirely within your kitchen?!\033[0m\033[34m'\033[0m",
+            "Options": ["Yes","No"],
+            "Move": [40,39],
+        },
+        39: {
+            "Text": "\033[36mSkinner: 'No, I was joking. It is actually a fire. It would be wise to contact the local authorities.'\n\033[34mChalmers: 'Good lord, you're joking when there's a fire?! For your clear show of negligence, I can't trust you to take care of a school full of children, you're fired!'\033[0m",
+            "Lose": "Fired",
+        },
+        40: {
+            "Text": "\033[36mSkinner: 'Yes.'\n\033[34mChalmers: May I see it?'\033[0m",
+            "Options": ["Yes","No"],
+            "Move": [41,43],
+        },
+        41: {
+            "Text": "\033[36mSkinner: Yes!\n\033[0m*Skinner and Chalmers enter the kitchen, viewing The Northern Lights up close.*",
+            "Automove": 42
+        },
+        42: {
+            "Text": "\033[34mChalmers: 'Well, Seymour, I must say, that was certainly an unforgettable luncheon.'\033[0m",
+            "Ending": "Unforgettable Luncheon"
+        },
+        43: {
+            "Text": "\033[36mSkinner: 'No.'\n\033[0m*Skinner and Chalmers exit the house*\n\033[35mAgnes: '\033[1mSeymour! The house is on fire!\033[0m\033[35m'\n\033[36mSkinner: 'No, mother, it's just the Northern Lights!'\n\033[34mChalmers: 'Well, Seymour, you are an odd fellow, but I must say, you steam a good ham.'\n\033[35mAgnes: '\033[1mHelp! HELP!!!\033[0m\033[35m'\n\033[0m*Skinner shows Chalmers a thumbs up and Chalmers heads home*\033[0m",
+            "Ending": "Homeless",
+        },
+        44: {
+            "Text": "\033[36mSkinner: 'Oh no, I said steamed hams. That's what I call hamburgers.'\n\033[34mChalmers: 'You call hamburgers steamed hams?'\n\033[36mSkinner: 'Yes. It's a regional dialect.'\n\033[34mChalmers: 'Uh-huh. Uh, what region?'\n\033[36mSkinner: 'Uh...'\033[0m",
+            "Options": ["Upstate New York","Russia","Albany","Utica"],
+            "Move": [28,29,130,140],
+        },
+        45: {
+            "Text": "\033[36mSkinner: 'Oh no, I said steamed hams. That's what I call hamburgers.'\n\033[34mChalmers: 'You call hamburgers steamed hams?'\n\033[36mSkinner: 'Yes. It's a regional dialect.'\n\033[34mChalmers: 'Uh-huh. Uh, what region?'\n\033[36mSkinner: 'Uh...'\033[0m",
+            "Options": ["Upstate New York","Russia","Albany","Utica"],
+            "Move": [28,29,130,140],
         },
     }
     return rooms

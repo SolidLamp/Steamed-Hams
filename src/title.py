@@ -35,7 +35,7 @@ def main(win):
         win.refresh()
         loop = gameLoop(win, 1)
     if query == 1:
-        loop = gameLoop(win, 25)
+        loop = gameLoop(win, 32)
     else:
         sys.exit()
     while loop == 0:

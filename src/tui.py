@@ -33,6 +33,7 @@ def print3(win, text, colorcode=0, delay=0.01, pauseAtNewline=0.0):
   #colorsetup(win)
   i = 0
   ansi = int(colorcode)
+  bold = False
   while i < len(text):
     char = text[i]
     if char == "\n":
@@ -46,16 +47,24 @@ def print3(win, text, colorcode=0, delay=0.01, pauseAtNewline=0.0):
         if text[i+2] == "0":
           win.addstr("", curses.A_NORMAL)
           ansi = 0
+          bold = False
         elif text[i+2] == "1":
           win.addstr("", curses.A_BOLD)
+          bold = True
         i += 3
     else:
-      if len(str(ansi)) == 2:
-        win.addstr(char, curses.color_pair(ansi))
-      elif ansi == 1:
-        win.addstr(char, curses.A_BOLD)
-      elif ansi == 0:
-        win.addstr(char, curses.A_NORMAL)
+      #win.addstr(str(int(bold)))
+      match len(str(ansi))+(int(bold)*10):
+        case 12:
+          win.addstr(char, curses.color_pair(ansi) | curses.A_BOLD)
+        case 10:
+          win.addstr(char, curses.A_BOLD)
+        case 2:
+          win.addstr(char, curses.color_pair(ansi))
+        case 0:
+          win.addstr(char, curses.A_NORMAL)
+        case _:
+          win.addstr(char)
       win.refresh()
       time.sleep(delay)
     i += 1
