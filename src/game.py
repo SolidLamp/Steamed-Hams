@@ -105,7 +105,7 @@ def get_rooms(win):
             "Lose": "Fired",
         },
         7: {
-            "Text": "*Skinner shuts the door in Chalmer's face*'\033[34mChalmers: \033[1mSEYMOUR!\033[0m\033[34m'",
+            "Text": "*Skinner shuts the door in Chalmer's face*'\n\033[34mChalmers: \033[1mSEYMOUR!\033[0m\033[34m'",
             "Ending": "Shut Out",
         },
         8: {
@@ -179,7 +179,7 @@ def get_rooms(win):
             "Automove": 24,
         },
         22: {
-            "Text": "\033[36mSkinner: 'Uh... ooh! That isn't smoke, it's steam! Steam from the steamed clams we're having. Mmmm, steamed clams!'\n\033[0m*\n\033[36mSkinner: 'Phew!'\n\033[0m*Skinner jumps through the window to purchase burgers from Krusty Burger*",
+            "Text": "\033[36mSkinner: 'Uh... ooh! That isn't smoke, it's steam! Steam from the steamed clams we're having. Mmmm, steamed clams!'\n\033[0m\n\033[36mSkinner: 'Phew!'\n\033[0m*Skinner jumps through the window to purchase burgers from Krusty Burger*",
             "Script": lambda: setattr(game_state, "luncheon", 'steamed clams'),
             "Automove": 24,
         },
@@ -235,7 +235,7 @@ def get_rooms(win):
             "Move": [36,37,38],
         },
         33: {
-            "Text": "\033[36mSkinner: 'Ho, ho, ho, no! Patented Skinner Burgers. Old family recipe!'\n\033[34mChalmers: 'For steamed hams?'\n\033[36mSkinner: 'Yes.'\n\033[34mChalmers: 'Yes, and you call them steamed hams, despite the fact they are obviously grilled.'\033[0m",
+            "Text": "\033[36mSkinner: 'Ho, ho, ho, no! Patented Skinner Burgers. Old family recipe!'\n\033[34mChalmers: 'For steamed hams?'\n\033[36mSkinner: 'Yes.'\n\033[34mChalmers: 'Yes, and you call them steamed hams, despite the fact they are obviously grilled?'\033[0m",
             "Options": ["Respond with confidence","Escape the conversation"],
             "Move": [34,35],
         },
@@ -267,7 +267,7 @@ def get_rooms(win):
             "Lose": "Fired",
         },
         40: {
-            "Text": "\033[36mSkinner: 'Yes.'\n\033[34mChalmers: May I see it?'\033[0m",
+            "Text": "\033[36mSkinner: 'Yes.'\n\033[34mChalmers: 'May I see it?'\033[0m",
             "Options": ["Yes","No"],
             "Move": [41,43],
         },
@@ -355,6 +355,221 @@ def get_rooms(win):
         58: {
             "Text": "\033[36mSkinner: 'Superintendent Chalmers! It's my finest meal yet! A truly unforgettable luncheon!'\n\033[34mChalmers: 'What have you done? What... Keep that away from me! Look, just, whatever, I'll give more funding to the school - just keep that \033[1mthing\033[0m\033[34m away from me!'\033[0m",
             "Ending": "Funding",
+        },
+        100: {
+            "Text": "*Chalmers approaches Skinner's house*",
+            "Options": ["Ring the doorbell", "Sneak in", "Bust in"],
+            "Move": [101, 202, 203],
+        },
+        101: {
+            "Text": "*After Chalmers rings the doorbell, Skinner opens the door*",
+            "Script": lambda: setattr(game_state, "luncheon", 'None'),
+            "Options": ["Sly insult","Overly friendly greeting","Shut the door","Walk away","Walk in without being invited"],
+            "Move": [102, 141, 139, 140, 104],
+        },
+        102: {
+            "Text": "\033[34mChalmers: 'Well, Seymour, I made it, despite your directions.'\n\033[36mSkinner: 'Ah, Superintendent Chalmers, welcome! I hope you're prepared for an unforgettable luncheon!'\033[0m",
+            "Options": ["Weak acknowledgement","Walk in without saying anything"],
+            "Move": [103, 104],
+        },
+        103: {
+            "Text": "\033[34mChalmers: 'Yeah...'\033[0m\n*Skinner walks into the kitchen, and Chalmers sits down at the dining table*\n*After a while, some muffled shouting is heard from the kitchen*",
+            "Options": ["Randomly shout 'Seymour!'","Investigate","Ignore it"],
+            "Move": [105, 111, 138],
+        },
+        104: {
+            "Text": "*Chalmers walks in without saying anything and sits down at the dining table*\n*After a while, some muffled shouting is heard from the kitchen*",
+            "Options": ["Randomly shout 'Seymour!'","Investigate","Ignore it"],
+            "Move": [105, 111, 138],
+        },
+        105: {
+            "Text": "\033[34mChalmers: '\033[1mSEYMOUR!!\033[0m\033[34m'\033[0m\n*Skinner runs into the dining room*\n\033[36mSkinner: 'Superintendent Chalmers! What is it?'",
+            "Options": ["Enquire about the noise","'Nothing'"],
+            "Move": [107, 106],
+        },
+        106: {
+            "Text": "\033[34mChalmers: 'Nothing. I just like your rug.'\n\033[36mSkinner: 'Oh, it's mother's.'",
+            "Options": ["Wait","Leave"],
+            "Move": [138, 110],
+        },
+        107: {
+            "Text": "\033[34mChalmers: 'What is happening in there?'\n\033[36mSkinner: 'Ooh, uh, it was just the neighbours.'",
+            "Options": ["Accept","Walk into the kitchen uninvited"],
+            "Move": [109, 108],
+        },
+        108: {
+            "Text": "*Chalmers walks into the kitchen univited*\n\033[34mChalmers: '\033[1mSEYMOUR!!\033[0m\033[34m'",
+            "Script": lambda: setattr(game_state, "luncheon", 'None'),
+            "Options": ["Ask about the smoke","Leave"],
+            "Move": [112, 117],
+        },
+        109: {
+            "Text": "\033[34mChalmers: 'I see.'\033[0m",
+            "Automove": 117,
+        },
+        110: {
+            "Text": "*Chalmers leaves Skinner's house without saying a word*\n\033[36mSkinner: '\033[1mSuperintendent Chalmers!\033[0m\033[36m'",
+            "Ending": "Left"
+        },
+        111: {
+            "Text": "*Chalmers walks into the kitchen*\n\033[34mChalmers: '\033[1mSEYMOUR!!\033[0m\033[34m'\n\033[36mSkinner: 'Superintendent! I was just, uh, just stretching my calves on the windowsill. Isometric exercise! Care to join me?'",
+            "Script": lambda: setattr(game_state, "luncheon", 'None'),
+            "Options": ["Ask about the smoke","Leave"],
+            "Move": [112, 117],
+        },
+        112: {
+            "Text": "\033[34mChalmers: 'Why is there smoke coming out of your oven, Seymour?'\n\033[36mSkinner: 'Uh... ooh! That isn't smoke, it's steam! Steam from the steamed clams we're having. Mmmm, steamed clams!'",
+            "Script": lambda: setattr(game_state, "luncheon", 'steamed clams'),
+            "Options": ["Push further","Leave"],
+            "Move": [113, 117],
+        },
+        113: {
+            "Text": "\033[34mChalmers: 'That is obviously smoke, Seymour.'\n\033[36mSkinner: 'Uh... ooh! Y- Uh.. you know, the... One thing I should... excuse me for one second.'",
+            "Options": ["Push further", "Jump through the window", "Leave"],
+            "Move": [115, 114, 117],
+        },
+        114: {
+            "Text": "*Chalmers jumps through the window, running towards Krusty Burger*\n\033[36mSkinner: '\033[1mSuperintendent Chalmers!\033[0m\033[36m'",
+            "Ending": "Krusty Burger",
+        },
+        115: {
+            "Text": "\033[34mChalmers: 'Seymour, can you really not even cook a roast correctly?'\n\033[36mSkinner: 'Uh...'",
+            "Options": ["Fire him", "Leave"],
+            "Move": [116, 117],
+        },
+        116: {
+            "Text": "\033[34mChalmers: 'You know what, Seymour? You're \033[1mFIRED!\033[0m\033[34m'\n\033[36mSkinner: '\033[1mNOOOOOOO!!!\033[0m\033[36m'",
+            "Ending": "Fired"
+        },
+        117: {
+            "Text": "*Chalmers leaves the kitchen, and sits back down at the dining table*\n*After a while, Skinner walks in with a plate of hamburgers*\n\033[36mSkinner: 'Superintendent, I hope you're ready for some mouthwatering hamburgers!'",
+            "Options": ["Accept", "Ask about promised meal", "Leave"],
+            "Option1Requirements": lambda: game_state.luncheon == "steamed clams",
+            "Move": [137, 118, 110],
+        },
+        118: {
+            "Text": "\033[34mChalmers: 'I thought we were having steamed clams.'\033[0m\033[36mSkinner: 'Oh, no, I said steamed hams. That's what I call hamburgers.'\033[0m",
+            "Options": ["Enquire further", "Call him out", "Leave"],
+            "Move": [119, 136, 110],
+        },
+        119: {
+            "Text": "\033[34mChalmers: 'You call hamburgers steamed hams?'\n\033[36mSkinner: 'Yes. It's a regional dialect.'\n\033[34mChalmers: 'Uh-huh. Uh, what region?'\n\033[36mSkinner: 'Uh...'\033[0m",
+            "Options": ["Enquire about the region", "Call him out", "Leave"],
+            "Move": [120, 136, 110],
+        },
+        120: {
+            "Text": "\033[34mChalmers: 'Uh-huh. Uh, what region?'\n\033[36mSkinner: 'Uh... Upstate New York.'\n\033[34mChalmers: 'Really? Well I'm from Utica and I've never heard anyone use the phrase steamed hams.'\033[0m",
+            "Options": ["Use own experiences as evidence", "Call him out", "Leave"],
+            "Move": [121, 136, 110],
+        },
+        121: {
+            "Text": "\033[34mChalmers: 'Really? Well I'm from Utica and I've never heard anyone use the phrase steamed hams.'\n\033[36mSkinner: 'Oh, not in Utica, no. It's an Albany expression.'\n\033[34mChalmers: 'I see.'\033[0m",
+            "Options": ["Ask about similarities to Krusty Burger", "Call him out for using Krusty Burgers", "Leave"],
+            "Move": [122, 136, 110],
+        },
+        122: {
+            "Text": "\033[34mChalmers: You know, these hamburgers are quite similar to the ones they have at Krusty Burger.'\n\033[36mSkinner: 'Ho, ho, ho, no! Patented Skinner Burgers. Old family recipe!'",
+            "Options": ["Return to original argument", "Drop the topic", "Leave"],
+            "Move": [123, 135, 110],
+        },
+        123: {
+            "Text": "\033[34mChalmers: 'For steamed hams?'\n\033[36mSkinner: 'Yes.'\n\033[34mChalmers: 'Yes, and you call them steamed hams, despite the fact they are obviously grilled?'\033[36mSkinner: 'Y- Uh.. you know, the... One thing I should... excuse me for one second.'\n\033[34mChalmers: 'Of course.'\033[0m*Skinner enters the kitchen for a couple seconds before leaving again, and returning.*\n\033[36mSkinner: *BIG YAWN* 'Well, that was wonderful. A good time was had by all. I'm pooped.\n\033[34mChalmers: 'Yes, I should be-'\033[0m\n*Skinner's kitchen is on fire*",
+            "Options": ["Ask about the fire", "Ask if the Aurora Borealis is in Skinner's kitchen", "Ignore it"],
+            "Move": [124, 132, 131],
+        },
+        124: {
+            "Text": "\033[34mChalmers: '\033[1m GOOD LORD! \033[0m What is happening in there?!'\n\033[36mSkinner: 'Aurora Borealis.'\033[0m",
+            "Options": ["Accept it", "Call out the absurdity", "Ask to see it"],
+            "Move": [130, 125, 126],
+        },
+        125: {
+            "Text": "\033[34mChalmers: '\033[1mA-Aurora Borealis?!\033[0m\033[34m'\nChalmers: '\033[1mAt this time of year,\033[0m\033[34m'\nChalmers: '\033[1mAt this time of day,\033[0m\033[34m'\nChalmers: '\033[1mIn this part of the country,\033[0m\033[34m'\nChalmers: '\033[1mLocalised entirely within your kitchen?!\033[0m\033[34m'\033[36mSkinner: 'Yes.'\n\033[34mChalmers: 'May I see it?'\033[0m",
+            "Options": ["Accept it", "Ask to see it"],
+            "Move": [130, 126],
+        },
+        126: {
+            "Text": "\033[34mChalmers: May I see it?'\n\033[36mSkinner: 'No.'\n\033[0m*Skinner and Chalmers exit the house*\033[0m",
+            "Options": ["Give a positive goodbye", "Give a neutral goodbye", "Don't say anything"],
+            "Option0Requirements": lambda: game_state.luncheon == "steamed clams",
+            "Move": [127, 128, 129],
+        },
+        127: {
+            "Text": "\033[35mAgnes: '\033[1mSeymour! The house is on fire!\033[0m\033[35m'\n\033[36mSkinner: 'No, mother, it's just the Northern Lights!'\n\033[34mChalmers: 'Well, Seymour, you are an odd fellow, but I must say, you steam a good ham.'\n\033[35mAgnes: '\033[1mHelp! HELP!!!\033[0m\033[35m'\n\033[0m*Skinner shows Chalmers a thumbs up and Chalmers heads home*\033[0m",
+            "Ending": "Steamed a good ham",
+        },
+        128: {
+            "Text": "\033[34mChalmers: 'Well, Seymour, you are an odd fellow.'\033[0m*Chalmers walk away and heads home*\033[0m",
+            "Ending": "Odd Fellow",
+        },
+        129: {
+            "Text": "*Chalmers walk away and heads home, without a word*",
+            "Ending": "Unbelievable",
+        },
+        130: {
+            "Text": "\033[34mChalmers: 'I see.'\n\033[0m*Skinner and Chalmers exit the house*",
+            "Options": ["Give a positive goodbye", "Give a neutral goodbye", "Don't say anything"],
+            "Option0Requirements": lambda: game_state.luncheon == "steamed clams",
+            "Move": [127, 128, 129],
+        },
+        131: {
+            "Text": "\033[34mChalmers: '-going.'\n\033[0m*Skinner and Chalmers exit the house*",
+            "Options": ["Give a positive goodbye", "Give a neutral goodbye", "Don't say anything"],
+            "Option0Requirements": lambda: game_state.luncheon == "steamed clams",
+            "Move": [127, 128, 129],
+        },
+        132: {
+            "Text": "\033[34mChalmers: 'I see Aurora Borealis in your kitchen, Seymour.'\n\033[36mSkinner: 'Uh... ooh! That isn't Aurora Borealis, it's fire! Fire from the ruined roast!'\033[0m",
+            "Options": ["Demand to see", "Leave without saying anything"],
+            "Move": [133, 129],
+        },
+        133: {
+            "Text": "\033[34mChalmers: 'There is Aurora Borealis in your kitchen, Seymour!'\n\033[36mSkinner: 'Uh-'\033[0m",
+            "Options": ["Walk into the kitchen", "Leave without saying anything"],
+            "Move": [134, 129],
+        },
+        134: {
+            "Text": "*Chalmers walks into the kitchen*\n*The kitchen is full of Aurora Borealis*\n*Skinner and Chalmers leave the house*\n\033[35mAgnes: '\033[1mSeymour! The house is on fire!\033[0m\033[35m'\n\033[36mSkinner: 'No, mother, it's just the Northern Lights!'\n\033[34mChalmers: 'Well, Seymour, I must say, that was an unforgettable luncheon.'\n\033[0m*Chalmers heads home*",
+            "Ending": "Aurora Borealis",
+        },
+        135: {
+            "Text": "\033[34mChalmers: 'I see. Well, I should be going now.'\n\033[0m*Skinner and Chalmers exit the house*",
+            "Options": ["Give a positive goodbye", "Give a neutral goodbye", "Don't say anything"],
+            "Option0Requirements": lambda: game_state.luncheon == "steamed clams",
+            "Move": [127, 128, 129],
+        },
+        136: {
+            "Text": "\033[34mChalmers: 'Do you take me for a fool, Seymour? That is the most idiotic thing I have heard in my life! I'm leaving!'\n\033[0m*Skinner and Chalmers exit the house*",
+            "Options": ["Give a neutral goodbye", "Don't say anything"],
+            "Move": [128, 129],
+        },
+        137: {
+            "Text": "\033[34mChalmers: 'I see.'\n\033[0m*Skinner and Chalmers eat their lunch together in silence.*\n033[36mSkinner: *BIG YAWN* 'Well, that was wonderful. A good time was had by all. I'm pooped.\n\033[34mChalmers: 'Yes, I should be going.'\n\033[0m*Skinner and Chalmers exit the house*",
+            "Options": ["Give a positive goodbye", "Give a neutral goodbye", "Don't say anything"],
+            "Option0Requirements": lambda: game_state.luncheon == "steamed clams",
+            "Move": [127, 128, 129],
+        },
+        138: {
+            "Text": "*After a while, Skinner walks in with a plate of hamburgers*\n\033[36mSkinner: 'Superintendent, I hope you're ready for some mouthwatering hamburgers!'",
+            "Options": ["Accept", "Leave"],
+            "Move": [137, 110],
+        },
+        139: {
+            "Text": "*Chalmers closes the door*\n\033[36mSkinner: '\033[1mSuperintendent!\033[0m\033[36m'\n\033[0m*Chalmers goes home*",
+            "Ending": "Refused",
+        },
+        140: {
+            "Text": "*Chalmers walks away*\n\033[36mSkinner: '\033[1mSuperintendent!\033[0m\033[36m'\n\033[0m*Chalmers goes home*",
+            "Ending": "Refused",
+        },
+        141: {
+            "Text": "\033[34mChalmers: 'Well, Seymour, I'm looking forward to this meeting over lunch! In all of our years of working together, I don't think I've ever actually known much about you.'\n\033[36mSkinner: 'Ah, Superintendent Chalmers, welcome! I hope you're prepared for an unforgettable luncheon!'\033[0m",
+            "Options": ["Strong acknowledgement", "Weak acknowledgement","Walk in without saying anything"],
+            "Move": [142, 103, 104],
+        },
+        142: {
+            "Text": "\033[34mChalmers: 'I'd never be more prepared, Seymour. I'm sure you can deliver something unforgettable.'\033[0m\n*Skinner walks into the kitchen, and Chalmers sits down at the dining table*\n*After a while, some muffled shouting is heard from the kitchen*",
+            "Options": ["Randomly shout 'Seymour!'","Investigate","Ignore it"],
+            "Move": [105, 111, 138],
         },
     }
     return rooms
