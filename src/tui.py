@@ -29,7 +29,7 @@ def colorsetup(win):
   curses.init_pair(46, curses.COLOR_BLACK, curses.COLOR_CYAN)
   curses.init_pair(47, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
-def print3(win, text, colorcode=0, delay=0.01, pauseAtNewline=0.0):
+def print3(win, text, colorcode=0, delay=0.015, pauseAtNewline=0.0):
   #colorsetup(win)
   i = 0
   ansi = int(colorcode)

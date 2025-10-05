@@ -14,7 +14,7 @@ if __name__ == "__main__":
     #if len(sys.argv) > 1:
         #sys.argv[1]
     print(
-        "SHM Engine 0.9b\n2025-10-02\nhttps://github.com/solidlamp\nThis release: 'Steamed Hams: The Game Plus! Edition Beta 2025-10-02'"
+        "SHM Engine 1.0-rc1\n2025-10-05\nhttps://github.com/solidlamp\nThis release: 'Steamed Hams: The Game Plus! Edition Beta 2025-10-05'"
     )
 
 roomID = 1
@@ -42,19 +42,23 @@ def option(win, text, options, Inventory=True):
     return query
 
 def ending(win, end):
-    if game.endingText and end in game.endingText:
-        print3(win, "\n" + game.endingText[end].replace("|", end), 0, 0.01, 0.65)
+    if hasattr(game, 'endingText') and end in game.endingText:
+        print3(win, "\n" + game.endingText[end].replace("|", end), 0, 0.015, 0.65)
     time.sleep(1.5)
     win.clear()
-    print3(win, game.defaultEnding.replace("|", end), 0, 0.01, 0.65)
+    print3(win, game.defaultEnding.replace("|", end), 0, 0.015, 0.65)
     time.sleep(3.5)
 
-def lose(win, text):
+def lose(win, lose):
     time.sleep(0.25)
-    print3(win, "\n\n\033[31m\033[1mYou died!\033[0m")
-    print3(win, "'" + text + "'\n\n\n")
+    if hasattr(game, 'loseText') and lose in game.loseText:
+        printText = "\n" + game.loseText[lose].replace("|", lose)
+    else:
+        printText = game.defaultLose.replace("|", lose)
+    print3(win, printText, 0, 0.015, 0.65)
+    win.clear()
     time.sleep(0.5)
-    query = tui.option(win, "Try again?", ["Yes", "No"])
+    query = tui.option(win, printText + "Try again?", ["Yes", "No"])
     if query == 1 or query == "q":
         sys.exit()
     else:

@@ -17,11 +17,15 @@ gameInfo = {
 history = []
 
 endingText = {
-    "Good": "And so, overnight, all the people returned to the village, as if they had never left.\nSoon after, the village was lifted into high spirits as the harvest had been the best in almost thirty years.\nDespite the prospering village, you decided to leave.\nYou had no desire to stay after the events you just experienced, and you would rather leave than stay to make some money.",
-    "Secret": "And so, overnight, you became the new shopkeeper, but nothing really changed in the end.\nThe villagers never returned, but many travellers came, hearing about what happened.\nMany decided to stay after a plentiful harvest brought good omens to the village.\nThis, however, would not be the last of it...\n...and you knew that.",
     "SHM": "You achieved the\n|\nEnding.\nTry Again?",
 }
-defaultEnding = "You achieved the\n|\nEnding."
+defaultEnding = "You achieved the\n\033[1m|\033[0m\nEnding."
+loseText = {
+    "SHM": "You achieved the\n|\nEnding.\nTry Again?",
+    "Fired": "\033[31mFail: You were fired\n\033[0m",
+    "The Seymour is Fired": "\033[31mFail: The Seymour is Fired!\n\033[0m",
+}
+defaultLose = "\n\033[1m|\033[0m"
 
 @dataclass
 class Inventory:
@@ -100,6 +104,15 @@ def get_rooms(win):
             "Text": "\033[36mSkinner: 'You fat-headed buffoon! The directions I gave you were perfectly in order! Plus you've already been here, so you must know the way!'\033[0m\n\033[34mChalmers: '\033[1mSeymour! I have never been more insulted in my life! You're fired!\033[0m\033[34m'\033[0m",
             "Lose": "Fired",
         },
+        7: {
+            "Text": "*Skinner shuts the door in Chalmer's face*'\033[34mChalmers: \033[1mSEYMOUR!\033[0m\033[34m'",
+            "Ending": "Shut Out",
+        },
+        8: {
+            "Text": "\033[36mSkinner: 'Puts-a-bits-a-pits-a-bits-a-pits-a-bits!'\033[0m\n\033[34mChalmers: 'Well, Seymour, I must say, you are an odd fellow.'\033[0m",
+            "Script": lambda: time.sleep(0.5),
+            "Automove": 11,
+        },
         9: {
             "Text": "\033[34mChalmers: '...Yeah.'\033[0m",
             "Script": lambda: time.sleep(0.5),
@@ -117,7 +130,7 @@ def get_rooms(win):
         12: {
             "Text": "*The roast burned whilst in the oven*\n\033[36mSkinner: 'Oh, egads! My roast is ruined!'\033[0m",
             "Options": ["Tell the truth","Lie and purchase fast food","Serve ruined roast","Serve the roast anyway, and ignore the fact that it is ruined"],
-            "Move": [13, 14, 107, 108]
+            "Move": [13, 14, 48, 49]
         },
         13: {
             "Text": "\033[36mSkinner: 'Superintendent! The roast is on fire!'\n\033[34mChalmers: 'Good lord! We must put it out!'\033[0m\n*Skinner and Chalmers extinguish the fire before any harm occurs.*\n\033[34mChalmers: Well, Seymour, we saved the house, but the roast is unrecoverable.\n\033[36mSkinner: 'Well, there's a Krusty Burger just down the street. We could have our lunch there?'\n\033[34mChalmers: 'Krusty Burger? I do enjoy fast food from time to time, and eating does help take your mind off things, especially incidents like this.'\n\033[36mSkinner: 'I could just go get them now and we could eat them in the dining room?'\n\033[34mChalmers: 'Oh, Seymour, you don't need to do that - we can just eat at the restaurant.'\n\033[36mSkinner: 'No, no - it's really no issue. Just wait here whilst I order.'\033[0m\n*Skinner and Chalmers enjoy a luncheon of Krusty Burgers together*\n\033[34mChalmers: 'Well, Seymour, that was delicious, but I really must be going now. Perhaps we can pick this up another time?'\033[0m",
@@ -142,40 +155,48 @@ def get_rooms(win):
         },
         18: {
             "Text": "\033[36mSkinner: 'Superintendent! I was just, uh, just stretching my calves on the windowsill. Isometric exercise! Care to join me?'\n\033[34mChalmers: 'Why is there smoke coming out of your oven, Seymour?'\033[0m",
-            "Options": ["Tell the truth","Make up an excuse","Deny the existence of the smoke","Crack a joke"],
-            "Move": [20, 21, 22, 23],
+            "Options": ["Tell the truth","Make up an excuse","Make up an excuse","Deny the existence of the smoke","Deny the existence of the smoke","Crack a joke","Crack a joke"],
+            "Option1Requirements": lambda: game_state.luncheon != "disguised ruined roast",
+            "Option2Requirements": lambda: game_state.luncheon == "disguised ruined roast",
+            "Option3Requirements": lambda: game_state.luncheon != "disguised ruined roast",
+            "Option4Requirements": lambda: game_state.luncheon == "disguised ruined roast",
+            "Option5Requirements": lambda: game_state.luncheon != "disguised ruined roast",
+            "Option6Requirements": lambda: game_state.luncheon == "disguised ruined roast",
+            "Move": [20, 21, 52, 22, 53, 23, 54],
         },
         19: {
-            "Text": "\033[36mSkinner: 'Superintendent! Ho, ho, ho! I was just about to climb out of the window to purchase Krusty Burger! Care to join me?'\n\033[34mChalmers: 'I didn't know that you had a sense of humour, Seymour.'\n\033[36mSkinner: 'It's mother's.'\033[34mChalmers: 'I see. Seymour, why is there smoke coming out of your oven, Seymour?'\033[0m",
+            "Text": "\033[36mSkinner: 'Superintendent! Ho, ho, ho! I was just about to climb out of the window to purchase Krusty Burger! Care to join me?'\n\033[34mChalmers: 'I didn't know that you had a sense of humour, Seymour.'\n\033[36mSkinner: 'It's mother's.'\n\033[34mChalmers: 'I see.'\nChalmers: 'Seymour, why is there smoke coming out of your oven, Seymour?'\033[0m",
             "Options": ["Tell the truth","Make up an excuse","Deny the existence of the smoke","Crack a joke"],
-            "Move": [20, 21, 22, 23],
+            "Move": [20, 21, 22, 23, ],
         },
         20: {
             "Text": "\033[36mSkinner: The roast is on fire!\n\033[34mChalmers: 'Good lord! And you were climbing out of the window to escape? You know what, Seymour? You're fired!'\033[0m",
             "Lose": "The Seymour is Fired",
         },
         21: {
-            "Text": "\033[36mSkinner: 'Uh... ooh! That's from... uh... from the smoked clams we're having!'\n\033[34mChalmers: 'Smoked clams?'\n\033[36mSkinner: 'Yes!'\n\033[0m*Chalmers leaves, and Seymour jumps through the window to purchase burgers from Krusty Burger*",
+            "Text": "\033[36mSkinner: 'Uh... ooh! That's from... uh... from the smoked clams we're having!'\n\033[34mChalmers: 'Smoked clams?'\n\033[36mSkinner: 'Yes!'\n\033[0m*Chalmers leaves*\n\033[36mSkinner: 'Phew!'\n\033[0m*Skinner jumps through the window to purchase burgers from Krusty Burger*",
             "Script": lambda: setattr(game_state, "luncheon", 'smoked clams'),
             "Automove": 24,
         },
         22: {
-            "Text": "\033[36mSkinner: 'Uh... ooh! That isn't smoke, it's steam! Steam from the steamed clams we're having. Mmmm, steamed clams!'\n\033[0m*Chalmers leaves, and Seymour jumps through the window to purchase burgers from Krusty Burger*",
+            "Text": "\033[36mSkinner: 'Uh... ooh! That isn't smoke, it's steam! Steam from the steamed clams we're having. Mmmm, steamed clams!'\n\033[0m*\n\033[36mSkinner: 'Phew!'\n\033[0m*Skinner jumps through the window to purchase burgers from Krusty Burger*",
             "Script": lambda: setattr(game_state, "luncheon", 'steamed clams'),
             "Automove": 24,
         },
         23: {
-            "Text": "\033[36mSkinner: 'Why do they call it oven when you of in the cold food of out hot eat the food?'\n\033[34mChalmers: '...Yeah.'\033[0m\n*Chalmers leaves, and Skinner jumps through the window to purchase burgers from Krusty Burger*",
-            "Script": lambda: setattr(game_state, "luncheon", 'some weird roast'),
+            "Text": "\033[36mSkinner: 'Why do they call it oven when you of in the cold food of out hot eat the food?'\n\033[34mChalmers: '...Yeah.'\033[0m\n*Chalmers leaves*\n\033[36mSkinner: 'Phew!'\n\033[0m*Skinner jumps through the window to purchase burgers from Krusty Burger*",
+            "Script": lambda: setattr(game_state, "luncheon", 'roast'),
             "Automove": 24,
         },
         24: {
-            "Text": "\033[1mThe Dining Room\033[0m\n+---------+",
+            "Text": "\033[1mThe Dining Room\033[0m\n+-------------+",
             "Script": lambda: time.sleep(0.5),
             "Automove": 25,
         },
         25: {
-            "Text": str("\033[36mSkinner: 'Superintendent, I hope you're ready for some mouthwatering hamburgers!'\n\033[34mChalmers: 'I thought we were having " + game_state.luncheon + ".'\033[0m"),
+            "Text": "\033[36mSkinner: 'Superintendent, I hope you're ready for some mouthwatering hamburgers!'\n\033[34mChalmers: 'I didn't know we were having hamburgers.'\033[0m",
+            "Requirements": lambda: game_state.luncheon == "roast",
+            "AlternateText": str("\033[36mSkinner: 'Superintendent, I hope you're ready for some mouthwatering hamburgers!'\n\033[34mChalmers: 'I thought we were having " + game_state.luncheon + ".'\033[0m"),
             "Options": ["Tell the truth","Make up an excuse"],
             "Move": [26,27],
         },
@@ -186,17 +207,17 @@ def get_rooms(win):
         27: {
             "Text": "\033[36mSkinner: 'Oh, no, I said steamed hams. That's what I call hamburgers.'\n\033[34mChalmers: 'You call hamburgers steamed hams?'\n\033[36mSkinner: 'Yes. It's a regional dialect.'\n\033[34mChalmers: 'Uh-huh. Uh, what region?'\n\033[36mSkinner: 'Uh...'\033[0m",
             "Options": ["Upstate New York","Russia","Albany","Utica"],
-            "Move": [28,29,130,140],
+            "Move": [28, 29, 44, 45],
         },
         28: {
             "Text": "\033[36mSkinner: 'Upstate New York.'\n\033[34mChalmers: 'Really? Well I'm from Utica and I've never heard anyone use the phrase steamed hams.'\033[0m",
             "Options": ["Specify a more specific region","Escape the conversation"],
-            "Move": [31,35],
+            "Move": [31, 35],
         },
         29: {
             "Text": "\033[36mSkinner: 'Russia.'\n\033[34mChalmers: 'Look, Seymour, I know your family history - you're not from Russia.'\n\033[36mSkinner: 'Oh. Uh...'\033[0m",
             "Options": ["Play it off as a joke","Double down"],
-            "Move": [30,131],
+            "Move": [30, 47],
         },
         30: {
             "Text": "\033[36mSkinner: 'Ho, ho, ho, no!'\n\033[36mSkinner: 'I was just 'pulling your thread', as they say.'\n\033[36mSkinner: 'I'm really from upstate New York.'\n\033[34mChalmers: 'Really? Well I'm from Utica and I've never heard anyone use the phrase steamed hams.'\033[0m",
@@ -263,14 +284,77 @@ def get_rooms(win):
             "Ending": "Homeless",
         },
         44: {
-            "Text": "\033[36mSkinner: 'Oh no, I said steamed hams. That's what I call hamburgers.'\n\033[34mChalmers: 'You call hamburgers steamed hams?'\n\033[36mSkinner: 'Yes. It's a regional dialect.'\n\033[34mChalmers: 'Uh-huh. Uh, what region?'\n\033[36mSkinner: 'Uh...'\033[0m",
-            "Options": ["Upstate New York","Russia","Albany","Utica"],
-            "Move": [28,29,130,140],
+            "Text": "\033[36mSkinner: 'It's an Albany expression.'\n\033[34mChalmers: 'I see.'\nChalmers: You know, these hamburgers are quite similar to the ones they have at Krusty Burger.'\033[0m",
+            "Options": ["Tell the truth","'Old Family Recipe'"],
+            "Move": [32,33],
         },
         45: {
-            "Text": "\033[36mSkinner: 'Oh no, I said steamed hams. That's what I call hamburgers.'\n\033[34mChalmers: 'You call hamburgers steamed hams?'\n\033[36mSkinner: 'Yes. It's a regional dialect.'\n\033[34mChalmers: 'Uh-huh. Uh, what region?'\n\033[36mSkinner: 'Uh...'\033[0m",
-            "Options": ["Upstate New York","Russia","Albany","Utica"],
-            "Move": [28,29,130,140],
+            "Text": "\033[36mSkinner: 'It's a Utica expression'\n\033[34mChalmers: 'Really? Well, I'm from- Wait, did you just say Utica?'\n\033[36mSkinner: 'Uh... Yes! '\n\033[34mChalmers: 'In all my years of working with you, Seymour, I had no idea that you were from Utica. So, where did you grow up in Utica?'\n\033[36mSkinner: 'Well...'\033[0m",
+            "Automove": 46,
+        },
+        46: {
+            "Text": "*After a long talk and meal...*\n\033[34mChalmers: 'Well, Seymour, that was certainly an interesting meal. Perhaps we got off on the wrong foot. I really must be going now, but I will certainly be looking towards our next meeting!",
+            "Ending": "Utica"
+        },
+        47: {
+            "Text": "\033[36mSkinner: 'Actually, my family history does trace back to Russia. You see, my great-great-great-great-great grandmother and grandfather were actually, uh, Armenian, in the Russian Empire. I, uh, think they left sometime in the, uh, 18th century. They've passed down many heirlooms including a recipe book which has a recipe for steamed hams, so that's why I call it that.'\n\033[34mChalmers: 'Well, I wouldn't say they were Russian - Armenia was quite a separate region from the Russian Empire; you can't really reduce an ethnic group to the nationality of their country - we can see that here even in America.'\n\033[36mSkinner: 'Yes, well, I suppose I can agree with that, but I wouldn't have expected you to know so much about Armenia, and I didn't say they were Russian.'\n\033[34mChalmers: 'But your family is really from Armenia? That's really interesting. Can I ask more about them?'\n\033[36mSkinner: 'Of course, Superintendent, but I can't guarantee I'll know everything - it's a long time ago.'\033[0m",
+            "Script": lambda: time.sleep(1),
+            "Automove": 46,
+        },
+        48: {
+            "Text": "\033[36mSkinner: 'But what if I were to serve ruined roast and disguise it as mouthwatering hamburgers? [chuckles] Delightfully devilish, Seymour.'\033[0m\n*Chalmers enters the kitchen*\n\033[34mChalmers: 'SEEEEEYMOOUUURRR!!!'\033[0m",
+            "Script": lambda: setattr(game_state, "luncheon", 'disguised ruined roast'),
+            "Options": ["Tell the truth","Opening a window","Random activity","Skydiving out of the window"],
+            "Move": [15, 16, 18, 17]
+        },
+        49: {
+            "Text": "\033[36mSkinner: 'But what if I were to serve ruined roast as a prank? [chuckles] Delightfully devilish, Seymour.'\033[0m\n*Chalmers enters the kitchen*\n\033[34mChalmers: 'SEEEEEYMOOUUURRR!!!'\033[0m",
+            "Options": ["Tell him about the roast", "Tell him to prepare for the unforgettable luncheon"],
+            "Move": [50, 51]
+        },
+        50: {
+            "Text": "\033[36mSkinner: 'Superintendent! I hope you're prepared for ruined roast!'\033[0m\n\033[34mChalmers: 'R-ruined roast?'\n\033[36mSkinner: 'Yes!'\n\033[34mChalmers: 'Perhaps we should have this lunch at another time, Seymour.'\033[0m",
+            "Ending": "Idiot"
+        },
+        51: {
+            "Text": "\033[36mSkinner: 'Superintendent! I hope you're prepared for an unforgettable luncheon!'\n\033[34mChalmers: 'Why is there smoke coming out of your oven, Seymour?'\033[0m",
+            "Script": lambda: setattr(game_state, "luncheon", 'ruined roast'),
+            "Options": ["Tell the truth","Make up an excuse","Deny the existence of the smoke","Crack a joke"],
+            "Move": [20, 52, 53, 54],
+        },
+        52: {
+            "Text": "\033[36mSkinner: 'Uh... ooh! That's from... uh... from the smoked clams we're having!'\n\033[34mChalmers: 'Smoked clams?'\n\033[36mSkinner: 'Yes!'\n\033[0m*Chalmers leaves*\n\033[36mSkinner: 'Phew!'\033[0m",
+            "Automove": 55,
+        },
+        53: {
+            "Text": "\033[36mSkinner: 'Uh... ooh! That isn't smoke, it's steam! Steam from the steamed clams we're having. Mmmm, steamed clams!'\n\033[0m*Chalmers leaves*\n\033[36mSkinner: 'Phew!'\033[0m",
+            "Automove": 55,
+        },
+        54: {
+            "Text": "\033[36mSkinner: 'Why do they call it oven when you of in the cold food of out hot eat the food?'\n\033[34mChalmers: '...Yeah.'\033[0m\n*Chalmers leaves*\n\033[36mSkinner: 'Phew!'\033[0m",
+            "Automove": 55,
+        },
+        55: {
+            "Text": "\033[1mThe Dining Room\033[0m\n+-------------+",
+            "Script": lambda: time.sleep(0.5),
+            "Automove": 56,
+        },
+        56: {
+            "Text": "\033[36mSkinner: 'Superintendent, I hope you're ready for some mouthwatering hamburgers!'\n\033[34mChalmers: 'I didn't know we were having hamburgers.'\033[0m",
+            "Requirements": lambda: game_state.luncheon == "disguised ruined roast",
+            "AlternateText": "\033[36mSkinner: 'Superintendent, I hope you're ready for some mouthwatering hamburgers!'\n\033[34mChalmers: 'I though- \033[1mGOOD LORD!\033[0m\033[34m What in the world is that?'\033[0m",
+            "Options": ["Tell the truth","Make up an excuse","Present the unforgettable luncheon"],
+            "Option1Requirements": lambda: game_state.luncheon == "disguised ruined roast",
+            "Option2Requirements": lambda: game_state.luncheon == "ruined roast",
+            "Move": [57,27,58],
+        },
+        57: {
+            "Text": "\033[36mSkinner: 'To tell the truth, Superintendent, the roast caught fire, but I just wanted this to be perfect, so I attempted to disguise it.'\n\033[34mChalmers: 'Look, Seymour, we've worked together for over 30 years. You can tell me when something's wrong. Is the oven off completely? We should run a check to make sure nothing is damaged. We can always reschedule the meeting, how about it, Seymour?'\033[0m",
+            "Ending": "Cancelled Luncheon",
+        },
+        58: {
+            "Text": "\033[36mSkinner: 'Superintendent Chalmers! It's my finest meal yet! A truly unforgettable luncheon!'\n\033[34mChalmers: 'What have you done? What... Keep that away from me! Look, just, whatever, I'll give more funding to the school - just keep that \033[1mthing\033[0m\033[34m away from me!'\033[0m",
+            "Ending": "Funding",
         },
     }
     return rooms
