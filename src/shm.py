@@ -14,7 +14,7 @@ if __name__ == "__main__":
     #if len(sys.argv) > 1:
         #sys.argv[1]
     print(
-        "SHM Engine 1.0-rc1\n2025-10-05\nhttps://github.com/solidlamp\nThis release: 'Steamed Hams: The Game Plus! Edition Beta 2025-10-05'"
+        "SHM Engine 1.0\n2025-10-05\nhttps://github.com/solidlamp\nThis release: 'Steamed Hams: The Game Plus! Edition 2025-10-05'"
     )
 
 roomID = 1
@@ -69,7 +69,7 @@ def gameLoop(win, starting_room=0):
     win.clear()
     if game.gameInfo["complevel"] != 1:
         complevel = game.gameInfo["complevel"]
-        print3(win, f"ERROR: This game (complevel {complevel}) is not compatible with this version of the SHM Engine (1.0 / complevel 1).", 1, 0)
+        print3(win, f"ERROR: This game (complevel {complevel}) is not compatible with this version of the SHM Engine (1.0 / complevel 1).", 31, 0)
         print3(win, "\nPress any key to exit...", 0, 0)
         win.getch()
         sys.exit(1)
